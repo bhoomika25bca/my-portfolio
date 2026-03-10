@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      scroll-behavior: smooth;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Home Section with Background Image */
+    #home {
+      height: 100vh;
+      background-image: url("campus.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      color: white;
+    }
+
+    #home .content {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    section {
+      padding: 40px 20px;
+      margin: 20px;
+      background: white;
+      border-radius: 10px;
+    }
+
+    .project {
+      background: #e9ecef;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    input {
+      padding: 8px;
+      width: 250px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #333;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Home Section -->
+<section id="home">
+  <div class="content">
+    <h1>BHOOMIKA R</h1>
+    <p>Web Developer | Student | Beginner</p>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>
+    I am a BCA student at Kristu Jayanti Deemed to be University, Bangalore.
+    I am currently pursuing my undergraduate studies with a strong interest
+    in web development and programming.
+  </p>
+  <p>
+    I am learning core web technologies such as HTML, CSS, and JavaScript,
+    and I enjoy creating simple, responsive websites as part of my academic
+    projects. I am passionate about improving my technical skills and gaining
+    practical experience in the field of software development.
+  </p>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project">
+    <h3>Single Page Website</h3>
+    <p>Developed using HTML, CSS, and JavaScript.</p>
+  </div>
+
+  <div class="project">
+    <h3>Portfolio Website</h3>
+    <p>Portfolio with navigation bar and background image.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Me</h2>
+
+   <p>
+    You can reach me through email for any queries or collaboration.
+  </p>
+
+  <p>
+    📧 Email:
+    <a href="mailto:25bcae15@kristujayanti.com">
+      25bcae15@kristujayanti.com
+    </a>
+  </p>
+
+  <form id="contactForm">
+    <input type="text" placeholder="Enter your name" required>
+    <br><br>
+    <button type="submit">Submit</button>
+  <form action="https://formspree.io/f/xzdadvzk" method="POST">
+  
+  <input type="text" name="name" placeholder="Your Name" required>
+  <br><br>
+
+  <input type="email" name="email" placeholder="Your Email" required>
+  <br><br>
+
+  <textarea name="message" placeholder="Your Message" required></textarea>
+  <br><br>
+
+  <button type="submit">Send Message</button>
+
+</form>
+</section>
+
+<footer>
+  <p>© 2026 My Portfolio</p>
+</footer>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Thank you for contacting me!");
+  });
+</script>
+
+</body>
+</html>
