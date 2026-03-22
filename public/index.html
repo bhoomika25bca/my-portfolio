@@ -539,18 +539,29 @@ document.getElementById("contactForm").addEventListener("submit", async function
     let email = document.querySelector("input[name='email']").value;
     let message = document.querySelector("textarea").value;
 
-    let response = await fetch("https://portfolio-backend-xxa3.onrender.com/api/messages", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name, email, message })
-    });
+    try {
+        let response = await fetch("https://portfolio-backend-xxa3.onrender.com/api/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, message })
+        });
 
-    let data = await response.json();
+        console.log("STATUS:", response.status);
 
-    if(data.success){
-        alert("Message saved in database!");
+        let data = await response.json();
+        console.log("DATA:", data);
+
+        if(data.success){
+            alert("✅ Message sent!");
+        } else {
+            alert("❌ Failed to send message");
+        }
+
+    } catch (error) {
+        console.error("ERROR:", error);
+        alert("⚠️ Cannot connect to server");
     }
 });
 </script>
