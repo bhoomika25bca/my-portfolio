@@ -1,7 +1,8 @@
+const cors = require("cors");
 const express = require("express");
 const mysql = require("mysql2");
 
-const app = express();
+const app = express() app.use(cors());
 const PORT = 3000;
 
 app.use(express.json());
@@ -24,7 +25,7 @@ db.connect((err) => {
 });
 
 // API to save form data
-app.post("/contact", (req, res) => {
+app.post("/api/messages", (req, res) => {
     const { name, email, message } = req.body;
 
     const sql = "INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)";
