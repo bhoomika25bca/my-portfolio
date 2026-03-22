@@ -2,13 +2,21 @@ const cors = require("cors");
 const express = require("express");
 const mysql = require("mysql2");
 
-const app = express() app.use(cors());
+const app = express();
 const PORT = 3000;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// MySQL connection
+// TEMP FIX ROUTE (IMPORTANT)
+app.post("/api/messages", (req, res) => {
+    console.log("Received:", req.body);
+
+    res.json({ success: true });
+});
+
+// MySQL (can stay for now, but won’t work on Render)
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -24,22 +32,6 @@ db.connect((err) => {
     }
 });
 
-// API to save form data
-app.post("/api/messages", (req, res) => {
-    const { name, email, message } = req.body;
-
-    const sql = "INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)";
-
-    db.query(sql, [name, email, message], (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.json({ success: false });
-        }
-
-        res.json({ success: true });
-    });
-});
-
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running`);
 });
