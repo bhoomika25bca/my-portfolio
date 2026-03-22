@@ -3,17 +3,17 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// 🔗 CONNECT MONGODB
-mongoose.connect("mongodb+srv://bhoomika1045_db_user:hUpvKdea1RWSGDuf@bhoomika-db.orxhwgb.mongodb.net/portfolio?retryWrites=true&w=majority")
+// ✅ MongoDB connection (SAFE)
+mongoose.connect("mongodb+srv://bhoomika1045_db_user:hUpvKdea1RWSGDuf@bhoomika-db.orxhwgb.mongodb.net/portfolio")
 .then(() => console.log("MongoDB Connected ✅"))
-.catch(err => console.log(err));
+.catch(err => console.log("Mongo Error:", err));
 
-// 📦 SCHEMA
+// ✅ Schema
 const MessageSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -22,32 +22,24 @@ const MessageSchema = new mongoose.Schema({
 
 const Message = mongoose.model("Message", MessageSchema);
 
-// 📩 SAVE DATA
+// ✅ Route
 app.post("/api/messages", async (req, res) => {
     try {
         const newMessage = new Message(req.body);
         await newMessage.save();
 
         res.json({ success: true });
-
     } catch (err) {
-        console.log(err);
+        console.log("Save Error:", err);
         res.json({ success: false });
     }
 });
 
-app.listen(PORT, () => {
-    console.log("Server running");
-});
-
-db.connect((err) => {
-    if (err) {
-        console.log("Database error:", err);
-    } else {
-        console.log("Connected to MySQL ✅");
-    }
+// ✅ Root route (IMPORTANT for Render)
+app.get("/", (req, res) => {
+    res.send("Server is running");
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running`);
+    console.log(`Server running on port ${PORT}`);
 });
