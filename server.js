@@ -1,27 +1,43 @@
-const cors = require("cors");
 const express = require("express");
-const mysql = require("mysql2");
+const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
 
-// TEMP FIX ROUTE (IMPORTANT)
-app.post("/api/messages", (req, res) => {
-    console.log("Received:", req.body);
+// 🔗 CONNECT MONGODB
+mongoose.connect("mongodb+srv://bhoomika1045_db_user:hUpvKdea1RWSGDuf@bhoomika-db.orxhwgb.mongodb.net/portfolio?retryWrites=true&w=majority")
+.then(() => console.log("MongoDB Connected ✅"))
+.catch(err => console.log(err));
 
-    res.json({ success: true });
+// 📦 SCHEMA
+const MessageSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    message: String
 });
 
-// MySQL (can stay for now, but won’t work on Render)
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Bhoomika@2005",
-    database: "portfolio_db"
+const Message = mongoose.model("Message", MessageSchema);
+
+// 📩 SAVE DATA
+app.post("/api/messages", async (req, res) => {
+    try {
+        const newMessage = new Message(req.body);
+        await newMessage.save();
+
+        res.json({ success: true });
+
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log("Server running");
 });
 
 db.connect((err) => {
