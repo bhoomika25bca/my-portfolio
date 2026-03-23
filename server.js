@@ -1,53 +1,43 @@
 const express = require("express");
-const cors = require("cors");
 const mysql = require("mysql2");
+const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// ✅ MySQL connection using environment variables
+// MySQL connection
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,       // from Render MySQL
-    user: process.env.DB_USER,       // from Render MySQL
-    password: process.env.DB_PASSWORD, // from Render MySQL
-    database: process.env.DB_NAME    // your database
+  host: "your-host",
+  user: "your-user",
+  password: "your-password",
+  database: "your-database"
 });
 
-db.connect(err => {
-    if(err){
-        console.log("DB Connection Error:", err);
-    } else {
-        console.log("MySQL Connected ✅");
-    }
-});
-
-// ✅ API route to save contact messages
+// API route (THIS IS WHAT YOU ASKED)
 app.post("/api/messages", (req, res) => {
-    const { name, email, message } = req.body;
+  const { name, email, message } = req.body;
 
-    if(!name || !email || !message){
-        return res.json({ success: false, error: "All fields are required" });
+  db.query(
+    "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+    [name, email, message],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.json({ success: false });
+      }
+
+      res.json({ success: true }); // ✅ IMPORTANT
     }
-
-    const sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
-    db.query(sql, [name, email, message], (err, result) => {
-        if(err){
-            console.log("Save Error:", err);
-            return res.json({ success: false });
-        }
-        res.json({ success: true, id: result.insertId });
-    });
+  );
 });
 
-// ✅ Root route
+// test route
 app.get("/", (req, res) => {
-    res.send("Server is running");
+  res.send("Server is running");
 });
 
-// ✅ Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
 });
