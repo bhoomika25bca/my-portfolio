@@ -540,13 +540,11 @@ document.getElementById("contactForm").addEventListener("submit", async function
     let message = document.querySelector("textarea").value;
 
     try {
-        let response = await fetch("https://portfolio-backend-xxa3.onrender.com/api/messages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email, message })
-        });
+        let response = await fetch("https://your-render-backend.onrender.com/api/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, message })
+});
 
         console.log("STATUS:", response.status);
 
