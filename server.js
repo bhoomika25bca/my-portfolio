@@ -20,19 +20,19 @@ db.connect(err => {
 app.post("/api/messages", (req, res) => {
   const { name, email, message } = req.body;
 
-  db.query(
-    "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
-    [name, email, message],
-    (err, result) => {
-      if (err) {
-        console.log("SQL ERROR 👉", err.message);
-        return res.json({ success: false });
-      }
-
-      res.json({ success: true });
+ db.query(
+  "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+  [name, email, message],
+  (err, result) => {
+    if (err) {
+      console.log("❌ SQL ERROR FULL:", err);   // 👈 VERY IMPORTANT
+      return res.json({ success: false });
     }
-  );
-});
+
+    console.log("✅ INSERT SUCCESS");
+    res.json({ success: true });
+  }
+);
 
 app.get("/", (req, res) => {
   res.send("Server running");
