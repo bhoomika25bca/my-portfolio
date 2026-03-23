@@ -17,22 +17,23 @@ db.connect(err => {
   }
 });
 
-// API
 app.post("/api/messages", (req, res) => {
   const { name, email, message } = req.body;
 
   db.query(
-  "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
-  [name, email, message],
-  (err, result) => {
-    if (err) {
-      console.log("SQL ERROR 👉", err.message); // 👈 IMPORTANT
-      return res.json({ success: false });
-    }
+    "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+    [name, email, message],
+    (err, result) => {
+      if (err) {
+        console.log("SQL ERROR 👉", err.message);
+        return res.json({ success: false });
+      }
 
-    res.json({ success: true });
-  }
-);
+      res.json({ success: true });
+    }
+  );
+});
+
 app.get("/", (req, res) => {
   res.send("Server running");
 });
