@@ -10,10 +10,10 @@ app.use(express.json());
 
 // ✅ MySQL Connection
 const db = mysql.createConnection({
-    host: "localhost",       // or remote host
-    user: "root",            // your MySQL username
-    password: "Bhoomika@2005", // your MySQL password
-    database: "portfolio"    // database name
+    host: "your-online-host",
+    user: "your-username",
+    password: "Bhoomika@2005",
+    database: "portfolio"
 });
 
 db.connect(err => {
