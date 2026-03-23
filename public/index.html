@@ -541,10 +541,10 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
     try {
         let response = await fetch("https://bhoomika-portfolio.onrender.com/api/messages", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, message })
-        });
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, message })
+});
 
         let data = await response.json();
 
