@@ -7,7 +7,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection(process.env.MYSQL_URL);
+const db = mysql.createConnection({
+  uri: process.env.MYSQL_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 db.connect(err => {
   if (err) {
