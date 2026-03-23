@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const mysql = require("mysql2");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,38 +8,46 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// ✅ MongoDB connection (SAFE)
-mongoose.connect("mongodb+srv://bhoomika1045_db_user:hUpvKdea1RWSGDuf@bhoomika-db.orxhwgb.mongodb.net/portfolio")
-.then(() => console.log("MongoDB Connected ✅"))
-.catch(err => console.log("Mongo Error:", err));
-
-// ✅ Schema
-const MessageSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    message: String
+// ✅ MySQL Connection
+const db = mysql.createConnection({
+    host: "localhost",       // or remote host
+    user: "root",            // your MySQL username
+    password: "your_password", // your MySQL password
+    database: "portfolio"    // database name
 });
 
-const Message = mongoose.model("Message", MessageSchema);
-
-// ✅ Route
-app.post("/api/messages", async (req, res) => {
-    try {
-        const newMessage = new Message(req.body);
-        await newMessage.save();
-
-        res.json({ success: true });
-    } catch (err) {
-        console.log("Save Error:", err);
-        res.json({ success: false });
+db.connect(err => {
+    if(err) {
+        console.log("DB Connection Error:", err);
+    } else {
+        console.log("MySQL Connected ✅");
     }
 });
 
-// ✅ Root route (IMPORTANT for Render)
+// ✅ Route to save messages
+app.post("/api/messages", (req, res) => {
+    const { name, email, message } = req.body;
+
+    if(!name || !email || !message) {
+        return res.json({ success: false, error: "All fields are required" });
+    }
+
+    const sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
+    db.query(sql, [name, email, message], (err, result) => {
+        if(err) {
+            console.log("Save Error:", err);
+            return res.json({ success: false });
+        }
+        res.json({ success: true, id: result.insertId });
+    });
+});
+
+// ✅ Root route
 app.get("/", (req, res) => {
     res.send("Server is running");
 });
 
+// ✅ Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
