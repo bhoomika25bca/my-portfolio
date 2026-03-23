@@ -17,32 +17,22 @@ db.connect(err => {
   }
 });
 
-db.connect(err => {
-  if (err) {
-    console.log("DB Connection Error:", err);
-  } else {
-    console.log("Connected to MySQL ✅");
-  }
-});
-
 // API
 app.post("/api/messages", (req, res) => {
   const { name, email, message } = req.body;
 
   db.query(
-    "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
-    [name, email, message],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        return res.json({ success: false });
-      }
-
-      res.json({ success: true });
+  "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
+  [name, email, message],
+  (err, result) => {
+    if (err) {
+      console.log("SQL ERROR 👉", err.message); // 👈 IMPORTANT
+      return res.json({ success: false });
     }
-  );
-});
 
+    res.json({ success: true });
+  }
+);
 app.get("/", (req, res) => {
   res.send("Server running");
 });
