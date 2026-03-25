@@ -3,33 +3,17 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
-<<<<<<< HEAD
-const PORT = process.env.PORT || 3000;
-=======
->>>>>>> 3bf8cf1f3683c46adaf6117a6110ac43550d65bb
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
-<<<<<<< HEAD
-// ✅ MongoDB connection (SAFE)
-mongoose.connect("mongodb+srv://bhoomika1045_db_user:hUpvKdea1RWSGDuf@bhoomika-db.orxhwgb.mongodb.net/portfolio")
-.then(() => console.log("MongoDB Connected ✅"))
-.catch(err => console.log("Mongo Error:", err));
-
-// ✅ Schema
-const MessageSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    message: String
-=======
-// ✅ DB CONNECTION (Railway with SSL)
+// ✅ MySQL connection
 const db = mysql.createConnection({
   uri: process.env.MYSQL_URL,
   ssl: {
     rejectUnauthorized: false
   }
->>>>>>> 3bf8cf1f3683c46adaf6117a6110ac43550d65bb
 });
 
 db.connect(err => {
@@ -40,18 +24,16 @@ db.connect(err => {
   }
 });
 
-<<<<<<< HEAD
-// ✅ Route
-app.post("/api/messages", async (req, res) => {
-    try {
-        const newMessage = new Message(req.body);
-        await newMessage.save();
+// ✅ Create table if not exists
+db.query(`
+  CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    message TEXT
+  )
+`);
 
-        res.json({ success: true });
-    } catch (err) {
-        console.log("Save Error:", err);
-        res.json({ success: false });
-=======
 // ✅ API
 app.post("/api/messages", (req, res) => {
   const { name, email, message } = req.body;
@@ -59,37 +41,22 @@ app.post("/api/messages", (req, res) => {
   db.query(
     "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)",
     [name, email, message],
-    (err, result) => {
+    (err) => {
       if (err) {
         console.log("❌ SQL ERROR:", err);
         return res.json({ success: false });
       }
-
       res.json({ success: true });
->>>>>>> 3bf8cf1f3683c46adaf6117a6110ac43550d65bb
     }
   );
 });
 
-<<<<<<< HEAD
-// ✅ Root route (IMPORTANT for Render)
-app.get("/", (req, res) => {
-    res.send("Server is running");
-});
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-=======
-// ✅ TEST ROUTE
+// ✅ Test route
 app.get("/", (req, res) => {
   res.send("Server running");
 });
 
-// ✅ PORT FIX
-const PORT = process.env.PORT || 5000;
-
+// ✅ Start server
 app.listen(PORT, () => {
-  console.log("Server started on port", PORT);
+  console.log("Server running on port", PORT);
 });
->>>>>>> 3bf8cf1f3683c46adaf6117a6110ac43550d65bb
