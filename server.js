@@ -10,7 +10,7 @@ app.use(express.json());
 
 // ✅ MySQL connection
 const db = mysql.createConnection({
-  uri: process.env.MYSQL_URL,
+  uri: process.env.DB_URL,
   ssl: {
     rejectUnauthorized: false
   }
