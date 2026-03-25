@@ -1,16 +1,9 @@
 {
   "name": "portfolio-project",
   "version": "1.0.0",
-<<<<<<< HEAD
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-=======
   "description": "Portfolio backend with MySQL",
   "main": "server.js",
   "scripts": {
->>>>>>> 3bf8cf1f3683c46adaf6117a6110ac43550d65bb
     "start": "node server.js"
   },
   "type": "commonjs",
@@ -19,6 +12,5 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "mysql2": "^3.20.0"
-  },
-  "devDependencies": {}
-}
+  }
+}s
