@@ -8,9 +8,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// ✅ MySQL connection
+// ✅ MySQL connection (FINAL WORKING)
 const db = mysql.createConnection({
-  uri: process.env.DB_URL,
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
   ssl: {
     rejectUnauthorized: false
   }
