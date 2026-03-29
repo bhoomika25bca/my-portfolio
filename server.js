@@ -5,21 +5,15 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 
-// ✅ MySQL connection (FINAL WORKING)
-const db = mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+// ✅ MySQL connection using DB_URL
+const db = mysql.createConnection(process.env.DB_URL);
 
+// Connect to DB
 db.connect(err => {
   if (err) {
     console.error("❌ DB Connection Error:", err);
@@ -38,7 +32,7 @@ db.query(`
   )
 `);
 
-// ✅ API
+// ✅ API to store messages
 app.post("/api/messages", (req, res) => {
   const { name, email, message } = req.body;
 
@@ -50,6 +44,7 @@ app.post("/api/messages", (req, res) => {
         console.log("❌ SQL ERROR:", err);
         return res.json({ success: false });
       }
+
       res.json({ success: true });
     }
   );
