@@ -540,7 +540,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     let message = document.querySelector("textarea").value;
 
     try {
-        let response = await fetch("https://my-portfolio-gnm9.onrender.com/api/messages", {
+        let response = await fetch("https://my-portfolio-p3oh.onrender.com/api/messages", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -555,6 +555,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
         if(data.success){
             alert("✅ Message sent!");
+            document.getElementById("contactForm").reset(); // optional reset
         } else {
             alert("❌ Failed to send message");
         }
